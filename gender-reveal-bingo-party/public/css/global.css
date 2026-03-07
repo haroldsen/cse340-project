@@ -1,0 +1,186 @@
+
+@import './header-footer.css';
+@import './chevron-background.css';
+@import './index.css';
+
+:root {
+    --purple-light: #e0abff;
+    --purple: #C768FF;
+    --purple-hover: #a362c9;
+    --dark-purple: #64377E;
+    --darkest-purple: #3d224d;
+    --purple-4: #23142c;
+    --purple-see-through: #c868ffc7;
+    --gray: #e7d7f0;
+    --gray-2: #d8c8e0;
+    --header-height: 120px;
+    --default-spacing: 20px;
+    --footer-height: fit-content;
+    --standard-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+    --red-2: #ff6966;
+    --red-3: #e25451;
+    --red-4: #631110;
+}
+
+@media screen 
+    and (pointer: coarse) {
+    /* This code is almost certainly running on a smartphone */
+    :root {
+        --purple: #d2b3ff;
+        --purple-hover: #c19df2;
+        --gray: #f8f2ff;
+        --gray-2: #f1e6ff;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    width: 100%;
+    font-size: 30px;
+    text-align: center;
+    margin: 0;
+}
+
+strong {
+    text-decoration: underline;
+}
+
+p {
+    margin: 0;
+}
+
+img {
+    user-select: none;
+}
+
+html, body {
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    background-color: var(--gray);
+}
+
+main {
+    width: 100vw;
+    height: fit-content;
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: var(--default-spacing);
+    padding-bottom: var(--default-spacing);
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+button, .button {
+    background-color: var(--purple);
+    font-weight: bold;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: 18px;
+    color: var(--darkest-purple);
+    text-decoration: none;
+    line-height: 21px;
+    transition: ease 300ms;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+button:hover, .button:hover {
+    cursor: pointer;
+    background-color: var(--purple-hover);
+}
+
+ul {
+    list-style-type: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    color: var(--dark-purple);
+}
+
+.page {
+    background-color: white;
+    width: 95vw;
+    max-width: 600px;
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    box-sizing: border-box;
+    box-shadow: var(--standard-shadow);
+}
+
+input, select {
+    padding: 10px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    max-width: 450px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+form a {
+    color: var(--dark-purple);
+    text-decoration: none;
+}
+
+form a:hover {
+    color: var(--darkest-purple);
+    text-decoration: underline;
+}
+
+.js-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--gray);
+    width: 100vw;
+    height: 100vh;
+    padding: 5vw;
+    z-index: 1000;
+
+    p {
+        width: 90vw;
+    }
+}

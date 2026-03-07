@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <link rel="stylesheet" href="/css/global.css">
+
+    <%- renderStyles() %>
+    <%- renderScripts() %>
+
+    <% if (NODE_ENV.includes('dev')) { %>
+        <script>
+            // Get the current hostname and port from the browser
+            const host = window.location.hostname;
+            const currentPort = window.location.port;
+            // Calculate WebSocket port (current port + 1)
+            const wsPort = currentPort ? (parseInt(currentPort) + 1) : 3001;
+            // Create WebSocket connection using dynamic hostname and port
+            const ws = new WebSocket(`ws://${host}:${wsPort}`);
+            ws.onclose = () => {
+                setTimeout(() => location.reload(), 2000);
+            };
+        </script>
+    <% } %>
+
+</head>
+<body class="<%= bodyClass %>">
+    <header>
+        <a class="logo-link" href="/"><img src="/images/logo.svg"></a>
+        <nav>
+            <!-- Always visible links -->
+            <a href="/">About Us</a>
+
+            <!-- Only visible when logged in -->
+                <% if (isLoggedIn) { %>
+                    <a href="/dashboard">My Games</a>
+                    <a href="/cards">Cards</a>
+                    <a href="/logout">Log Out</a>
+                <% } %>
+
+                <!-- Only visible when NOT logged in -->
+                <% if (!isLoggedIn) { %>
+                    <a href="/register">Create Account</a>
+                    <a href="/login">Log In</a>
+                <% } %>
+        </nav>
+    </header>
+<% 
+    const messages = flash();
+    const hasMessages = Object.values(messages).some(arr => arr.length > 0);
+%>
+
+<% if (hasMessages) { %>
+    <div class="flash-messages">
+        <% Object.keys(messages).forEach(type => { %>
+            <% messages[type].forEach(message => { %>
+                <div class="flash <%= type %>">
+                    <%= message %>
+                </div>
+            <% }); %>
+        <% }); %>
+    </div>
+<% } %>

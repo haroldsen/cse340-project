@@ -1,0 +1,39 @@
+
+#chevron {
+    position: absolute;
+    left: 0;
+
+    animation-duration: 3s;
+    animation-name: background-slide;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes background-slide {
+    0% {
+
+    }
+    100% {
+        transform: translateX(-10%);
+    }
+}
+
+#screen {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: -1;
+}
+
+#screen > img {
+    height: 100vh;
+    position: absolute;
+    z-index: 5;
+    user-select: none;
+}

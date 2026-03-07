@@ -1,0 +1,125 @@
+
+.index {
+
+#landing-block {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: calc(100vh - 90px);
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+#landing-block p {
+    width: 80vw;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--purple-4);
+}
+
+#landing-block img {
+    width: 80vw;
+    max-width: 600px;
+}
+
+.instruction-card {
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    text-align: center;
+    width: 80vw;
+    max-width: 275px;
+    aspect-ratio: 1 / 1;
+    box-shadow: var(--standard-shadow);
+}
+
+.instruction-card .step {
+    background-color: var(--purple-light);
+    color: var(--dark-purple);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    font-size: 30px;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+.instruction-card .emoji {
+    font-size: 40px;
+}
+
+.instruction-card .title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.instruction-card .details {
+    width: 100%;
+    font-size: 16px;
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    width: 100vw;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    background-color: var(--gray);
+}
+
+.panel:nth-child(2n) {
+    background-color: var(--gray-2);
+}
+
+.panel img {
+    width: 80vw;
+    max-width: 350px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.panel h2 {
+    max-width: 80vw;
+}
+
+.panel p {
+    width: 80vw;
+    max-width: 450px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.panel strong {
+    text-decoration: none;
+}
+
+.dynamic-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media (max-width: 1000px) {
+    .dynamic-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .dynamic-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+}

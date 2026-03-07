@@ -1,0 +1,56 @@
+
+header, footer {
+    background-color: white;
+}
+
+header {
+    height: var(--header-height);
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    box-shadow: var(--standard-shadow);
+    padding-top: 10px;
+}
+
+.logo-link {
+    display: flex;
+    height: 75%;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-link img {
+    height: 80%;
+    transition: ease 300ms;
+}
+
+.logo-link img:hover {
+    cursor: pointer;
+    scale: 1.05;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: end;
+    height: 25%;
+}
+
+nav a {
+    text-decoration: none;
+    transition: ease 200ms;
+    border-bottom: solid var(--purple) 0px;
+}
+
+nav a:hover {
+    /* border-top: solid white 5px; */
+    border-bottom: solid var(--purple) 4px;
+}
+
+footer {
+    min-height: var(--footer-height);
+    padding: 20px;
+}
