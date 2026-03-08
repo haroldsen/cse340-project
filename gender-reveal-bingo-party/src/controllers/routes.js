@@ -9,6 +9,8 @@ import loginRoutes from './forms/login.js';
 import { processLogout, showDashboard } from './forms/login.js';
 import { requireLogin } from '../middleware/auth.js';
 
+import { myGamesPage, gameSettingsPage } from './games/my-games.js';
+
 import { Router } from 'express';
 
 // Create a new router instance
@@ -51,6 +53,10 @@ router.use('/register', (req, res, next) => {
 // Home and basic pages
 router.get('/', homePage);
 router.get('/about', aboutPage);
+
+// Game management pages
+router.get('/my-games', myGamesPage);
+router.get('/my-games/game-settings/:gameId', gameSettingsPage);
 
 // Course catalog routes
 router.get('/catalog', catalogPage);
