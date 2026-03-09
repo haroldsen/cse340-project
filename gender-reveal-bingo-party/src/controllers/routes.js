@@ -9,7 +9,7 @@ import loginRoutes from './forms/login.js';
 import { processLogout, showDashboard } from './forms/login.js';
 import { requireLogin } from '../middleware/auth.js';
 
-import { myGamesPage, gameSettingsPage } from './games/my-games.js';
+import { myGamesPage, editGamePage, playGamePage } from './games/my-games.js';
 
 import { Router } from 'express';
 
@@ -56,7 +56,8 @@ router.get('/about', aboutPage);
 
 // Game management pages
 router.get('/my-games', myGamesPage);
-router.get('/my-games/game-settings/:gameId', gameSettingsPage);
+router.get('/my-games/edit-game/:gameId', editGamePage);
+router.get('/my-games/play-game/:gameId', playGamePage);
 
 // Course catalog routes
 router.get('/catalog', catalogPage);

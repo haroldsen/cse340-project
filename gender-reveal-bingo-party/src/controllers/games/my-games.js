@@ -37,7 +37,12 @@
 const myGamesPage = async (req, res, next) => {
     // const userGames = await getGamesByUserId();
 
-    const userGames = [];
+    const userGames = [
+        {
+            title: 'Christian and Nikara\'s Gender Reveal',
+            id: 'A742B39s593asdfjmsp492'
+        }
+    ];
 
     res.render('my-games', {
         title: 'My Games | Gender Reveal Bingo Party',
@@ -45,10 +50,16 @@ const myGamesPage = async (req, res, next) => {
     });
 }
 
-const gameSettingsPage = async (req, res, next) => {
-
-
-    // res.render('my-games/game-settings/game')
+const editGamePage = async (req, res, next) => {
+    res.render('games/edit-game', {
+        title: 'Edit Game | Gender Reveal Bingo Party'
+    });
 }
 
-export { myGamesPage, gameSettingsPage };
+const playGamePage = async (req, res, next) => {
+    res.render('games/play-game', {
+        title: 'Play | Gender Reveal Bingo Party'
+    });
+}
+
+export { myGamesPage, editGamePage, playGamePage };

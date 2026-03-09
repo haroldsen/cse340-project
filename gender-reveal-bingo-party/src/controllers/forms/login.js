@@ -104,8 +104,8 @@ const processLogout = (req, res) => {
         // If session destruction succeeded, clear the session cookie from the browser
         res.clearCookie('connect.sid');
 
-        // Redirect the user to the home page
-        res.redirect('/');
+        // Redirect the user to the login page
+        res.redirect('/login');
     });
 };
 

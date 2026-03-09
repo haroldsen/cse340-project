@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+
+    <link rel="stylesheet" href="/css/play.css">
+
+    <%- renderStyles() %>
+    <%- renderScripts() %>
+
+    <% if (NODE_ENV.includes('dev')) { %>
+        <script>
+            // Get the current hostname and port from the browser
+            const host = window.location.hostname;
+            const currentPort = window.location.port;
+            // Calculate WebSocket port (current port + 1)
+            const wsPort = currentPort ? (parseInt(currentPort) + 1) : 3001;
+            // Create WebSocket connection using dynamic hostname and port
+            const ws = new WebSocket(`ws://${host}:${wsPort}`);
+            ws.onclose = () => {
+                setTimeout(() => location.reload(), 2000);
+            };
+        </script>
+    <% } %>
+
+    <!-- For Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W686TSMP');</script>
+    <!-- End Google Tag Manager -->
+
+</head>
+<body class="<%= bodyClass %>">
+
+    <!-- For Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W686TSMP"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+<% 
+    const messages = flash();
+    const hasMessages = Object.values(messages).some(arr => arr.length > 0);
+%>
+
+<% if (hasMessages) { %>
+    <div class="flash-messages">
+        <% Object.keys(messages).forEach(type => { %>
+            <% messages[type].forEach(message => { %>
+                <div class="flash <%= type %>">
+                    <%= message %>
+                </div>
+            <% }); %>
+        <% }); %>
+    </div>
+<% } %>
+
+
+    <div class="big-warning" id="orientation-warning">
+        <p><strong>This Page Must Be Viewed in Landscape:</strong> This site is meant to be viewed in landscape. Please turn your device or expand your window accordingly.</p>
+    </div>
+    <div id="page-viewer">
+
+    </div>
+    <button id="fullscreen-button">fullscreen</button>
+    <div id="screen">
+        <img src="/images/chevron.svg" id="chevron">
+        <img src="/images/wide-vinget.svg">
+    </div>
+
+
+</body>
+</html>
