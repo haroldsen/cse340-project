@@ -10,6 +10,7 @@ import { processLogout, showDashboard } from './forms/login.js';
 import { requireLogin } from '../middleware/auth.js';
 
 import { myGamesPage, editGamePage, playGamePage } from './games/my-games.js';
+import { createGameForUserId } from '../models/games/games.js';
 
 import { Router } from 'express';
 
@@ -55,9 +56,15 @@ router.get('/', homePage);
 router.get('/about', aboutPage);
 
 // Game management pages
-router.get('/my-games', myGamesPage);
-router.get('/my-games/edit-game/:gameId', editGamePage);
-router.get('/my-games/play-game/:gameId', playGamePage);
+router.get('/my-games', requireLogin, myGamesPage);
+router.get('/my-games/edit-game/:gameId', requireLogin, editGamePage);
+router.get('/my-games/play-game/:gameId', requireLogin, playGamePage);
+router.get('/purchase-confirmation', (req, res, next) => {
+    
+    createGameForUserId(req.session.user.id);
+
+    res.redirect('/my-games');
+});
 
 // Course catalog routes
 router.get('/catalog', catalogPage);

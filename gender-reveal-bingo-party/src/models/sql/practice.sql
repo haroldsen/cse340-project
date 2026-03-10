@@ -74,3 +74,21 @@ BEGIN
         WHERE role_id IS NULL;
     END IF;
 END $$;
+
+-- Create the games table
+CREATE TABLE IF NOT EXISTS games (
+    -- Primary key: 30-character string
+    id VARCHAR(30) PRIMARY KEY,
+    
+    -- Title: max length 50, required
+    title VARCHAR(50) NOT NULL,
+    
+    -- Boolean value: defaults to true if needed, or false
+    is_playable BOOLEAN NOT NULL DEFAULT TRUE,
+    
+    -- Created at: captures the exact time of entry
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    
+    -- Foreign key: references the users table
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
+);

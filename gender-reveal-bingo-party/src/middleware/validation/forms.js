@@ -45,6 +45,7 @@ const registrationValidation = [
         .withMessage('Email address is too long'),
     body('emailConfirm')
         .trim()
+        .normalizeEmail()
         .custom((value, { req }) => value === req.body.email)
         .withMessage('Email addresses must match'),
     body('password')
@@ -92,6 +93,25 @@ const updateAccountValidation = [
         .matches(/^[a-zA-Z\s'-]+$/)
         .withMessage('Name can only contain letters, spaces, hyphens, and apostrophes'),
     body('email')
+        .trim()
+        .isEmail()
+        .normalizeEmail()
+        .withMessage('Must be a valid email address')
+        .isLength({ max: 255 })
+        .withMessage('Email address is too long')
+];
+
+/**
+ * Validation rules for editing game details
+ */
+const editGameValidation = [
+    body('title')
+        .trim()
+        .isLength({ min: 3, max: 50 })
+        .withMessage('Title must be between 3 and 50 characters')
+        .matches(/^[a-zA-Z\s'-]+$/)
+        .withMessage('Title can only contain letters, spaces, hyphens, and apostrophes'),
+    body('gender')
         .trim()
         .isEmail()
         .normalizeEmail()
