@@ -40,7 +40,7 @@ const handleEditGameSubmission = async (req, res) => {
         errors.array().forEach(error => {
             req.flash('error', error.msg);
         });
-        return res.redirect(`my-games/edit-game/${gameId}`);
+        return res.redirect(`/my-games/edit-game/${gameId}`);
     }
 
     try {
@@ -55,7 +55,7 @@ const handleEditGameSubmission = async (req, res) => {
     } catch (error) {
         console.error('Error editing game:', error);
         req.flash('error', 'Unable to edit game. Please try again later.');
-        res.redirect(`/${gameId}`);
+        res.redirect(`/my-games/edit-game/${gameId}`);
     }
 }
 
