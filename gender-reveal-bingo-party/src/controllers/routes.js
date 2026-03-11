@@ -1,6 +1,6 @@
 
 import { addDemoHeaders } from '../middleware/demo/headers.js';
-import { homePage, aboutPage, demoPage, testErrorPage } from './index.js';
+import { homePage, aboutPage, getCardsPage, demoPage, testErrorPage } from './index.js';
 import { catalogPage, courseDetailPage } from './catalog/catalog.js';
 import { facultyListPage, facultyDetailPage } from './faculty/faculty.js';
 import contactRoutes from './forms/contact.js';
@@ -54,6 +54,7 @@ router.use('/register', (req, res, next) => {
 // Home and basic pages
 router.get('/', homePage);
 router.get('/about', aboutPage);
+router.get('/get-cards', getCardsPage);
 
 // Game management pages
 router.get('/my-games', requireLogin, myGamesPage);

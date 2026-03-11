@@ -194,3 +194,26 @@ form a:hover {
 .access-error {
     gap: 20px;
 }
+
+.get-cards {
+
+    img {
+        width: 80vw;
+        max-width: 500px;
+    }
+
+    main {
+        gap: 20px;
+    }
+
+    main p {
+        width: 80vw;
+        text-align: center;
+        font-size: 30px;
+    }
+
+    .stripe-alert {
+        font-size: 12px;
+    }
+
+}
