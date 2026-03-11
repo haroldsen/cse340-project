@@ -41,8 +41,8 @@ const createGameForUserId = async (userId) => {
         const gameId = getRandomString(25);
         try {
             const query = `
-                INSERT INTO games (id, title, is_playable, created_at, user_id)
-                VALUES ($1, 'New Game', true, CURRENT_TIMESTAMP, $2)
+                INSERT INTO games (id, title, gender, is_playable, created_at, user_id)
+                VALUES ($1, 'New Game', 'BOY', true, CURRENT_TIMESTAMP, $2)
                 RETURNING *;
             `;
             result = await db.query(query, [gameId, userId]);
@@ -69,14 +69,14 @@ const createGameForUserId = async (userId) => {
 /**
  * Update a user's name and email
  */
-const updateGame = async (id, name, email) => {
+const updateGameByGameId = async (id, title, gender) => {
     const query = `
-        UPDATE users 
-        SET name = $1, email = $2, updated_at = CURRENT_TIMESTAMP
-        WHERE id = $3
-        RETURNING id, name, email, updated_at
+        UPDATE games
+        SET title = $2, gender = $3
+        WHERE id = $1
+        RETURNING id, title, gender;
     `;
-    const result = await db.query(query, [name, email, id]);
+    const result = await db.query(query, [id, title, gender]);
     return result.rows[0] || null;
 };
 
@@ -110,7 +110,7 @@ const getGamesForUserId = async (userId) => {
  * Wrapper functions for cleaner API - these make the code more readable at the call site.
  * Example: getFacultyById(5) is clearer than getFaculty(5, 'id')
  */
-const getFacultyById = (facultyId) => getFaculty(facultyId, 'id');
-const getFacultyBySlug = (facultySlug) => getFaculty(facultySlug, 'slug');
+// const getFacultyById = (facultyId) => getFaculty(facultyId, 'id');
+// const getFacultyBySlug = (facultySlug) => getFaculty(facultySlug, 'slug');
 
-export { createGameForUserId, getGamesForUserId };
+export { createGameForUserId, updateGameByGameId, getGamesForUserId };

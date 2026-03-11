@@ -87,6 +87,8 @@ a:hover {
 }
 
 button, .button {
+    position: relative;
+    top: 0px;
     background-color: var(--purple);
     font-weight: bold;
     padding: 10px;
@@ -99,12 +101,15 @@ button, .button {
     text-decoration: none;
     line-height: 21px;
     transition: ease 300ms;
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.15);
 }
 
 button:hover, .button:hover {
+    top: 1px;
     cursor: pointer;
     background-color: var(--purple-hover);
+    color: var(--purple-4);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 ul {

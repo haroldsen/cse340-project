@@ -82,6 +82,9 @@ CREATE TABLE IF NOT EXISTS games (
     
     -- Title: max length 50, required
     title VARCHAR(50) NOT NULL,
+
+    -- Gender:
+    gender VARCHAR(4) NOT NULL,
     
     -- Boolean value: defaults to true if needed, or false
     is_playable BOOLEAN NOT NULL DEFAULT TRUE,

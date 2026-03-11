@@ -113,16 +113,15 @@ const editGameValidation = [
         .withMessage('Title can only contain letters, spaces, hyphens, and apostrophes'),
     body('gender')
         .trim()
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Must be a valid email address')
-        .isLength({ max: 255 })
-        .withMessage('Email address is too long')
+        .isIn(['BOY', 'GIRL'])
+        .withMessage('Gender must be either "BOY" or "GIRL"')
+        .escape()
 ];
 
 export { 
     contactValidation,
     registrationValidation,
     loginValidation,
-    updateAccountValidation
+    updateAccountValidation,
+    editGameValidation
 };
