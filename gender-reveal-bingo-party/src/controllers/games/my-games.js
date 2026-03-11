@@ -2,7 +2,8 @@
 import { Router } from "express";
 import { validationResult } from "express-validator";
 import { editGameValidation } from '../../middleware/validation/forms.js';
-import { getGamesForUserId, updateGameByGameId } from "../../models/games/games.js";
+import { getGamesForUserId, updateGameByGameId, getGameById } from "../../models/games/games.js";
+import { requireLogin } from "../../middleware/auth.js";
 
 const myGamesPage = async (req, res, next) => {
 
@@ -15,16 +16,43 @@ const myGamesPage = async (req, res, next) => {
 }
 
 const editGamePage = async (req, res, next) => {
-    res.render('games/edit-game', {
-        title: 'Edit Game | Gender Reveal Bingo Party',
-        gameId: req.params.gameId
-    });
+
+    const gameToEdit = await getGameById(req.params.gameId);
+
+    const sessionUserId = req.session.user.id;
+    const gameUserId = gameToEdit.userId;
+
+    if (sessionUserId === gameUserId) {
+        res.render('games/edit-game', {
+            title: 'Edit Game | Gender Reveal Bingo Party',
+            gameId: req.params.gameId
+        });
+    } else {
+        res.render('games/access-issue', {
+            title: 'Access Denied | Gender Reveal Bingo Party',
+            gameId: req.params.gameId
+        });
+    }
 }
 
 const playGamePage = async (req, res, next) => {
-    res.render('games/play-game', {
-        title: 'Play | Gender Reveal Bingo Party'
-    });
+
+    const gameToPlay = await getGameById(req.params.gameId);
+
+    const sessionUserId = req.session.user.id;
+    const gameUserId = gameToPlay.userId;
+
+    if (sessionUserId === gameUserId) {
+        res.render('games/play-game', {
+            title: 'Play | Gender Reveal Bingo Party',
+            gameId: req.params.gameId
+        });
+    } else {
+        res.render('games/access-issue', {
+            title: 'Access Denied | Gender Reveal Bingo Party',
+            gameId: req.params.gameId
+        });
+    }
 }
 
 const handleEditGameSubmission = async (req, res) => {
@@ -61,7 +89,7 @@ const handleEditGameSubmission = async (req, res) => {
 
 const editGameRoutes = Router();
 
-editGameRoutes.get('/:gameId', editGamePage);
+editGameRoutes.get('/:gameId', requireLogin, editGamePage);
 
 editGameRoutes.post('/:gameId', editGameValidation, handleEditGameSubmission);
 

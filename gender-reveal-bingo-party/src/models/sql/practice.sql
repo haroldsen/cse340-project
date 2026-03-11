@@ -76,6 +76,7 @@ BEGIN
 END $$;
 
 -- Create the games table
+-- id, title, gender, is_playable, created_at, user_id
 CREATE TABLE IF NOT EXISTS games (
     -- Primary key: 30-character string
     id VARCHAR(30) PRIMARY KEY,

@@ -107,10 +107,46 @@ const getGamesForUserId = async (userId) => {
 };
 
 /**
+ * Get all faculty members in a specific department.
+ * 
+ * @param {number} departmentId - The ID of the department
+ * @param {string} sortBy - Sort option: 'name' (default), 'department', 'title'
+ * @returns {Promise<Array>} Array of faculty objects in the specified department
+ */
+const getGameById = async (gameId) => {
+    
+    const query = `
+        SELECT
+            id,
+            title,
+            gender,
+            is_playable,
+            created_at,
+            user_id
+        FROM games
+        WHERE id = $1
+        LIMIT 1
+    `;
+    
+    const result = await db.query(query, [gameId]);
+
+    const objectList = result.rows.map(game => ({
+        id: game.id,
+        title: game.title,
+        gender: game.gender,
+        isPlayable: game.is_playable,
+        createdAt: game.created_at,
+        userId: game.user_id
+    }));
+
+    return objectList[0];
+};
+
+/**
  * Wrapper functions for cleaner API - these make the code more readable at the call site.
  * Example: getFacultyById(5) is clearer than getFaculty(5, 'id')
  */
 // const getFacultyById = (facultyId) => getFaculty(facultyId, 'id');
 // const getFacultyBySlug = (facultySlug) => getFaculty(facultySlug, 'slug');
 
-export { createGameForUserId, updateGameByGameId, getGamesForUserId };
+export { createGameForUserId, updateGameByGameId, getGamesForUserId, getGameById };
