@@ -50,6 +50,23 @@ nav a:hover {
     border-bottom: solid var(--purple) 4px;
 }
 
+.login-name {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    p {
+        padding: 7px;
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: var(--purple);
+        color: var(--purple-4);
+        width: fit-content;
+        border-radius: 0 0 7px 7px;
+        box-shadow: var(--standard-shadow);
+    }
+}
+
 footer {
     min-height: var(--footer-height);
     padding: 20px;

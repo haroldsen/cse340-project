@@ -35,6 +35,12 @@
 
 </head>
 <body class="<%= bodyClass %>">
+
+    <!-- For Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W686TSMP"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <header>
         <a class="logo-link" href="/"><img src="/images/logo.svg"></a>
         <nav>
@@ -57,10 +63,11 @@
         </nav>
     </header>
 
-    <!-- For Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W686TSMP"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+<% if (isLoggedIn) { %>
+    <div class="login-name">
+        <p><%= userName %></p>
+    </div>
+<% } %>
 
 <% 
     const messages = flash();
