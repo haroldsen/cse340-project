@@ -94,5 +94,8 @@ CREATE TABLE IF NOT EXISTS games (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     
     -- Foreign key: references the users table
-    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+
+    -- The Stripe session ID (The key to preventing duplicates)
+    stripe_session_id VARCHAR(255) UNIQUE NOT NULL
 );

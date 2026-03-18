@@ -9,6 +9,8 @@ const myGamesPage = async (req, res, next) => {
 
     const userGames = await getGamesForUserId(req.session.user.id);
 
+    res.addScript('<script src="/js/purchase.js" defer></script>');
+
     res.render('my-games', {
         title: 'My Games | Gender Reveal Bingo Party',
         games: userGames

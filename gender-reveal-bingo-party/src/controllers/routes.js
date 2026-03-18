@@ -11,6 +11,7 @@ import { requireLogin } from '../middleware/auth.js';
 
 import { myGamesPage, editGameRoutes, playGamePage } from './games/my-games.js';
 import { createGameForUserId } from '../models/games/games.js';
+import paymentHandlerRoutes from './stripe/stripe.js';
 
 import { Router } from 'express';
 
@@ -86,6 +87,9 @@ router.use('/register', registrationRoutes);
 
 // Login routes (form and submission)
 router.use('/login', loginRoutes);
+
+// Stripe purchase routes
+router.use('/purchase-game', paymentHandlerRoutes);
 
 // Authentication-related routes at root level
 router.get('/logout', processLogout);

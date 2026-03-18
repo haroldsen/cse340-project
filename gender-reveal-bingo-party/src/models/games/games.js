@@ -33,7 +33,7 @@ function getRandomString(length) {
  * @param {string} hashedPassword - The bcrypt-hashed password
  * @returns {Promise<Object>} The newly created user record (without password)
  */
-const createGameForUserId = async (userId) => {
+const createGameForUserId = async (userId, stripeSessionId) => {
     let isUnique = false;
     let result;
 
@@ -41,15 +41,15 @@ const createGameForUserId = async (userId) => {
         const gameId = getRandomString(25);
         try {
             const query = `
-                INSERT INTO games (id, title, gender, is_playable, created_at, user_id)
-                VALUES ($1, 'New Game', 'BOY', true, CURRENT_TIMESTAMP, $2)
+                INSERT INTO games (id, title, gender, is_playable, created_at, user_id, stripe_session_id)
+                VALUES ($1, 'New Game', 'BOY', true, CURRENT_TIMESTAMP, $2, $3)
+                ON CONFLICT (stripe_session_id) DO NOTHING
                 RETURNING *;
             `;
-            result = await db.query(query, [gameId, userId]);
+            result = await db.query(query, [gameId, userId, stripeSessionId]);
 
             // Break the while loop if the insert succeeded (meaning the id was unique)
             isUnique = true;
-
         }
 
         // If there was an insert fail

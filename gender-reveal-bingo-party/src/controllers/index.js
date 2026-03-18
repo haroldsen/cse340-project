@@ -2,11 +2,11 @@
 // Route handlers for static pages
 
 const homePage = (req, res) => {
-    res.render('index', { title: 'Home' });
+    res.render('index', { title: 'Home | Gender Reveal Bingo Party' });
 };
 
 const aboutPage = (req, res) => {
-    res.render('about', { title: 'About' });
+    res.render('about', { title: 'About | Gender Reveal Bingo Party' });
 };
 
 const getCardsPage = (req, res) => {

@@ -92,7 +92,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Allow Express to receive and process POST data
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+
+// Use json for all routes but add a rawBody specifically for the stripe webhook
+app.use(express.json({
+    verify: (req, res, buf) => {
+        if (req.originalUrl.includes('/webhook')) {
+            req.rawBody = buf;
+        }
+    }
+}));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
