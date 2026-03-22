@@ -23,21 +23,25 @@ const editGamePage = async (req, res, next) => {
 
     const sessionUserId = req.session.user.id;
     const gameUserId = gameToEdit.userId;
+    const previousTitle = gameToEdit.title;
 
     if (sessionUserId === gameUserId) {
         res.render('games/edit-game', {
             title: 'Edit Game | Gender Reveal Bingo Party',
+            previousTitle: previousTitle,
             gameId: req.params.gameId
         });
     } else {
         res.render('games/access-issue', {
-            title: 'Access Denied | Gender Reveal Bingo Party',
+            title: 'Edit Game | Gender Reveal Bingo Party',
             gameId: req.params.gameId
         });
     }
 }
 
 const playGamePage = async (req, res, next) => {
+
+    res.addScript('<script type="module" src="/js/play/play.js" defer></script>');
 
     const gameToPlay = await getGameById(req.params.gameId);
 
@@ -47,12 +51,11 @@ const playGamePage = async (req, res, next) => {
     if (sessionUserId === gameUserId) {
         res.render('games/play-game', {
             title: 'Play | Gender Reveal Bingo Party',
-            gameId: req.params.gameId
+            winningGender: gameToPlay.gender
         });
     } else {
         res.render('games/access-issue', {
             title: 'Access Denied | Gender Reveal Bingo Party',
-            gameId: req.params.gameId
         });
     }
 }

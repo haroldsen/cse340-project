@@ -1,5 +1,6 @@
 
 import { createGameForUserId } from '../../models/games/games.js';
+import { requireLogin } from "../../middleware/auth.js";
 
 import express from 'express';
 import Stripe from 'stripe';
@@ -15,7 +16,6 @@ export const handleCreateCheckout = async (req, res) => {
     console.log('\nCreating Stripe checkout session!');
 
     try {
-
         const priceId = process.env.STRIPE_TEST_PRICE_ID;
         // const priceId = process.env.STRIPE_PRICE_ID;
 
@@ -26,7 +26,7 @@ export const handleCreateCheckout = async (req, res) => {
             mode: 'payment',
             // success_url: 'https://genderrevealbingo.party/purchase-game/success',
             // cancel_url: 'https://genderrevealbingo.party/my-games',
-            success_url: 'http://127.0.0.1:3000/purchase-game/success',
+            success_url: 'http://127.0.0.1:3000/purchase-game/purchase-confirmation',
             cancel_url: 'http://127.0.0.1:3000/my-games',
             metadata: { userId },
         });
@@ -92,8 +92,15 @@ export const handleStripeWebhook = async (req, res) => {
     res.status(200).json({ received: true });
 };
 
+const purchaseConfirmationPage = async (req, res, next) => {
+    res.render('purchase/purchase-confirmation', {
+        title: 'Purchase Confirmation | Gender Reveal Bingo Party'
+    });
+}
+
 // Map the functions to the routes
 router.post('/create-checkout-session', express.json(), handleCreateCheckout);
 router.post('/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
+router.get('/purchase-confirmation', requireLogin, purchaseConfirmationPage);
 
 export default router;

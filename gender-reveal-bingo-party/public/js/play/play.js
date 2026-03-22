@@ -2,13 +2,6 @@
 import { getCards } from "./card-data.mjs";
 import { getWinningSequence } from "./sequence.mjs";
 
-let activeGame = JSON.parse(localStorage.getItem('activeGame'));
-
-// If anyone makes it to play.html without selecting a game, redirect them to the game manager page
-if (!activeGame) {
-    window.location.href = "manage-games.html";
-}
-
 const pageViewer = document.getElementById('page-viewer');
 
 const cards = getCards();
@@ -28,7 +21,7 @@ let hasAGirl = false;
 const landingPage = document.createElement('div');
 landingPage.className = 'page';
 landingPage.innerHTML = `
-    <img class="logo" src="src/media/logo.svg">
+    <img class="logo" src="../../images/logo.svg">
     <button class="play-intro-button">Play Intro</button>
     <button class="skip-intro-button">Skip Intro</button>
 `;
@@ -53,7 +46,7 @@ const introVideoPage = document.createElement('div');
 introVideoPage.className = 'page';
 introVideoPage.innerHTML = `
     <button class="close-intro">Close Intro</button>
-    <video id="intro-video" controls controlsList="nofullscreen" src="src/media/intro-video.mp4">
+    <video id="intro-video" controls controlsList="nofullscreen" src="../../videos/intro-video.mp4">
 `;
 
 // Handle interactions
@@ -117,7 +110,7 @@ const bingoBall = document.createElement('div');
 bingoBall.id = 'bingo-ball';
 const boxOfMystery = document.createElement('img');
 boxOfMystery.id = 'box-of-mystery';
-boxOfMystery.src = "src/media/box-of-mystery.svg";
+boxOfMystery.src = "../../images/box-of-mystery.svg";
 bingoBall.addEventListener('animationend', noticeAnimationEnd);
 
 // Handle interactions
@@ -193,7 +186,7 @@ earlyBingoPage.innerHTML = `
     <div class="pop-up">
         <h2>This is awkward...</h2>
         <p>There should NOT have been a bingo yet.</p>
-        <p>Is it possible a bingo card was not registered?</p>
+        <p>A bingo card may not have been registered.</p>
         <p>If there are still problems, this page may need refreshed and the cards may need re-registered.</p>
     </div>
     <div class="button-floor">
@@ -214,13 +207,13 @@ earlyBingoPage.addEventListener('click', (e) => {
 // Create congrats page
 const congratsPage = document.createElement('div');
 congratsPage.className = 'page';
-let imgSrc = `src/media/announce-${activeGame.gender.toLowerCase()}.svg`;
+let imgSrc = `../../images/announce-${winningGender.toLowerCase()}.svg`;
 congratsPage.innerHTML = `
     <div class="pop-up">
         <h2>Congratulations!</h2>
         <img src="${imgSrc}">
         <p>Thank you for letting us be part of your big reveal!</p>
-        <a href="manage-games.html">Return to Main Site</a>
+        <a href="/my-games">Return to Main Site</a>
     </div>
 `;
 
@@ -288,7 +281,7 @@ function tryIdSubmit() {
 
 function initializeGame() {
     if (hasABoy && hasAGirl) {
-        sequence = getWinningSequence(activeGame.gender, cardsInPlay, 24);
+        sequence = getWinningSequence(winningGender, cardsInPlay, 4);
         sequenceIndex = 0;
         pulled = [];
         switchToPage(newNumberPage);

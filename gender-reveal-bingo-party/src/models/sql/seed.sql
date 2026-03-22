@@ -1,6 +1,7 @@
 -- Database seed file for student course catalog
 -- This file creates tables and inserts all initial data
 
+/*
 BEGIN;
 
 -- Drop existing tables (in reverse dependency order)
@@ -254,3 +255,4 @@ INSERT INTO catalog (course_slug, faculty_slug, time, room) VALUES
     ('intl-401', 'john-ivers', 'Mon Wed 2:00-3:15', 'LA 303');
 
 COMMIT;
+*/

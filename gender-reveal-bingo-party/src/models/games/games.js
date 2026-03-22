@@ -1,6 +1,7 @@
 
 import db from '../db.js';
 
+
 /**
  * Generates a random alphanumeric string (lowercase letters and numbers).
  * @param {number} length - The desired length of the string.
@@ -93,7 +94,7 @@ const getGamesForUserId = async (userId) => {
         SELECT id, title, created_at, is_playable
         FROM games
         WHERE user_id = $1
-        ORDER BY created_at
+        ORDER BY created_at DESC
     `;
     
     const result = await db.query(query, [userId]);
@@ -101,7 +102,11 @@ const getGamesForUserId = async (userId) => {
     return result.rows.map(game => ({
         id: game.id,
         title: game.title,
-        creationDate: game.creation_date,
+        createdAt: new Date(game.created_at).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        }),
         isPlayable: game.is_playable
     }));
 };

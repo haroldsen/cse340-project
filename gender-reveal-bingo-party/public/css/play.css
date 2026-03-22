@@ -12,7 +12,7 @@
 
 @font-face {
     font-family: 'Borel';
-    src: url('../media/Borel/Borel-Regular.ttf') format('truetype');
+    src: url('../Borel/Borel-Regular.ttf') format('truetype');
 }
 
 * {
@@ -378,32 +378,49 @@ tr:nth-child(2n) {
 
 .pop-up {
     height: fit-content;
-    width: fit-content;
-    max-width: 80vw;
+    width: 80vw;
+    max-width: 800px;
     background-color: white;
     display: flex;
     flex-direction: column;
-    gap: 5vh;
+    gap: 20px;
     align-items: center;
     justify-content: center;
     border-radius: 15px;
-    padding: 25px;
-}
+    padding: 30px;
 
-.pop-up h2 {
-    font-size: 7vh;
-    margin: 10px;
-}
+    h2 {
+        font-size: 45px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
 
-.pop-up p {
-    text-align: center;
-    margin: 0;
-    font-size: 5vh;
-    line-height: 8vh;
-}
+    p {
+        text-align: center;
+        margin: 0;
+        font-size: 30px;
+        line-height: 1.5;
+    }
 
-.pop-up img {
-    height: 40vh;
+    img {
+        height: 40vh;
+    }
+
+    @media (max-width: 1000px) {
+        max-width: 550px;
+        gap: 15px;
+
+        h2 {
+            font-size: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 20px;
+        }
+    }
 }
 
 #page-viewer {

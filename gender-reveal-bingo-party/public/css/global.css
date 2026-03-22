@@ -10,6 +10,7 @@
     --purple-hover: #a362c9;
     --dark-purple: #64377E;
     --darkest-purple: #3d224d;
+    --logo-purple: #2b133d;
     --purple-4: #23142c;
     --purple-see-through: #c868ffc7;
     --gray: #e7d7f0;
@@ -29,8 +30,9 @@
     :root {
         --purple: #d2b3ff;
         --purple-hover: #c19df2;
-        --gray: #f8f2ff;
-        --gray-2: #f1e6ff;
+        --logo-purple: #382a69;
+        --gray: #e5e8ff;
+        --gray-2: #dbdeff;
     }
 }
 
@@ -73,7 +75,7 @@ body {
 main {
     width: 100vw;
     height: fit-content;
-    min-height: calc(100vh - var(--header-height));
+    /* min-height: calc(100vh - var(--header-height)); */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -144,6 +146,15 @@ a {
     align-items: center;
     box-sizing: border-box;
     box-shadow: var(--standard-shadow);
+
+    p {
+        font-size: 20px;
+    }
+
+    img {
+        width: 80vw;
+    }
+
 }
 
 input, select {
@@ -195,25 +206,28 @@ form a:hover {
     gap: 20px;
 }
 
+.contact-us {
+    .page {
+        p {
+            text-align: center;
+        }
+    }
+}
+
 .get-cards {
-
     img {
-        width: 80vw;
-        max-width: 500px;
+        max-width: 400px;
     }
+}
 
-    main {
-        gap: 20px;
+.contact-us {
+    svg {
+        max-width: 250px;
     }
+}
 
-    main p {
-        width: 80vw;
-        text-align: center;
-        font-size: 30px;
+.purchase-confirmation {
+    img {
+        max-width: 200px;
     }
-
-    .stripe-alert {
-        font-size: 12px;
-    }
-
 }
