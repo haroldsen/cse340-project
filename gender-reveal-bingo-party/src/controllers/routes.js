@@ -5,7 +5,8 @@ import {
     homePage,
     aboutPage,
     getCardsPage,
-    contactUsPage
+    contactUsPage,
+    introVideoPage
 } from './index.js';
 
 import contactRoutes from './forms/contact.js';
@@ -61,6 +62,7 @@ router.get('/', homePage);
 router.get('/about', aboutPage);
 router.get('/contact-us', contactUsPage);
 router.get('/get-cards', requireLogin, getCardsPage);
+router.get('/intro-video', introVideoPage);
 
 // Game management pages
 router.get('/my-games', requireLogin, myGamesPage);

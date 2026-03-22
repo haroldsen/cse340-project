@@ -231,3 +231,10 @@ form a:hover {
         max-width: 200px;
     }
 }
+
+.intro-video {
+    video {
+        width: 100vw;
+        max-width: 600px;
+    }
+}
