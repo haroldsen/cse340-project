@@ -46,7 +46,7 @@ const introVideoPage = document.createElement('div');
 introVideoPage.className = 'page';
 introVideoPage.innerHTML = `
     <button class="close-intro">Close Intro</button>
-    <video id="intro-video" controls controlsList="nofullscreen" src="../../videos/intro-video.mp4">
+    <video id="intro-video" controls controlsList="nofullscreen" src="/videos/intro-video.mp4">
 `;
 
 // Handle interactions
