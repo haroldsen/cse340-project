@@ -2,6 +2,7 @@
 <main>
     <div class="page">
         <h1>My Games</h1>
+
         <ul id="my-games-list">
 
             <% if (games.length > 0) { %>
@@ -22,9 +23,8 @@
 
         </ul>
 
-        <!-- <a class="button" href="/purchase-confirmation">Purchase a Game</a> -->
         <button onclick="launchStripeCheckout()">Purchase a Game</button>
-        <a class="button" href="/get-cards">Get Cards</a>
+
     </div>
 </main>
 <%- include('partials/footer') %>

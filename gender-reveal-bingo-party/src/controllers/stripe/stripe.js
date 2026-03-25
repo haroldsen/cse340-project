@@ -5,8 +5,15 @@ import { requireLogin } from "../../middleware/auth.js";
 import express from 'express';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_TEST_SECRET_KEY);
-// const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripeKey = process.env.NODE_ENV.includes('dev')
+    ? process.env.STRIPE_TEST_SECRET_KEY
+    : process.env.STRIPE_SECRET_KEY;
+
+const priceId = process.env.NODE_ENV.includes('dev')
+    ? process.env.STRIPE_TEST_PRICE_ID
+    : process.env.STRIPE_PRICE_ID;
+
+const stripe = new Stripe(stripeKey);
 
 const router = express.Router();
 
@@ -16,19 +23,14 @@ export const handleCreateCheckout = async (req, res) => {
     console.log('\nCreating Stripe checkout session!');
 
     try {
-        const priceId = process.env.STRIPE_TEST_PRICE_ID;
-        // const priceId = process.env.STRIPE_PRICE_ID;
-
         const userId = req.session.user.id;
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [{ price: priceId, quantity: 1 }],
             mode: 'payment',
-            // success_url: 'https://genderrevealbingo.party/purchase-game/success',
-            // cancel_url: 'https://genderrevealbingo.party/my-games',
-            success_url: 'http://127.0.0.1:3000/purchase-game/purchase-confirmation',
-            cancel_url: 'http://127.0.0.1:3000/my-games',
-            metadata: { userId },
+            success_url: `${process.env.BASE_URL}/purchase-game/purchase-confirmation`,
+            cancel_url: `${process.env.BASE_URL}/my-games`,
+            metadata: { userId }
         });
         res.json({ url: session.url });
     } catch (error) {
@@ -99,7 +101,7 @@ const purchaseConfirmationPage = async (req, res, next) => {
 }
 
 // Map the functions to the routes
-router.post('/create-checkout-session', express.json(), handleCreateCheckout);
+router.post('/create-checkout-session', requireLogin, express.json(), handleCreateCheckout);
 router.post('/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
 router.get('/purchase-confirmation', requireLogin, purchaseConfirmationPage);
 
