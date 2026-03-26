@@ -1,4 +1,5 @@
 
+// FOR VPS
 // import 'dotenv/config';
 
 import express from 'express';
@@ -29,6 +30,9 @@ const PORT = process.env.PORT || 3000;
  * Setup Express Server
  */
 const app = express();
+
+// FOR VPS
+// app.set('trust proxy', 1);
 
 // Initialize PostgreSQL session store
 const pgSession = connectPgSimple(session);

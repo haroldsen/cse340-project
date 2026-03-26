@@ -13,6 +13,12 @@ const priceId = process.env.NODE_ENV.includes('dev')
     ? process.env.STRIPE_TEST_PRICE_ID
     : process.env.STRIPE_PRICE_ID;
 
+const stripeWebhookSecret = process.env.NODE_ENV.includes('dev')
+    ? process.env.STRIPE_WEBHOOK_SECRET
+    : process.env.STRIPE_TEST_WEBHOOK_SECRET;
+
+const baseURL = process.env.BASE_URL;
+
 const stripe = new Stripe(stripeKey);
 
 const router = express.Router();
@@ -28,8 +34,8 @@ export const handleCreateCheckout = async (req, res) => {
             payment_method_types: ['card'],
             line_items: [{ price: priceId, quantity: 1 }],
             mode: 'payment',
-            success_url: `${process.env.BASE_URL}/purchase-game/purchase-confirmation`,
-            cancel_url: `${process.env.BASE_URL}/my-games`,
+            success_url: `${baseURL}/purchase-game/purchase-confirmation`,
+            cancel_url: `${baseURL}/my-games`,
             metadata: { userId }
         });
         res.json({ url: session.url });
@@ -59,7 +65,7 @@ export const handleStripeWebhook = async (req, res) => {
         event = stripe.webhooks.constructEvent(
             payload,
             sig,
-            process.env.STRIPE_WEBHOOK_SECRET
+            stripeWebhookSecret
         );
     } catch (err) {
         console.error(`Webhook signature verification failed: ${err.message}`);
