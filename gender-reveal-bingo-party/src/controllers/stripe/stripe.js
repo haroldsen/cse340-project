@@ -49,6 +49,10 @@ export const handleStripeWebhook = async (req, res) => {
     // CLI command: stripe listen --forward-to http://127.0.0.1:3000/purchase-game/webhook
     console.log('\nReceived POST request from Stripe!');
 
+    console.log("  Headers: ", JSON.stringify(req.headers));
+    console.log("  Body Type: ", req.rawBody instanceof Buffer ? "Buffer (Correct body type)" : `${typeof req.rawBody} (WRONG BODY TYPE)`);
+    console.log("  Secret used: ", process.env.STRIPE_WEBHOOK_SECRET?.substring(0, 10));
+
     const sig = req.headers['stripe-signature'];
     let event;
 
@@ -56,7 +60,7 @@ export const handleStripeWebhook = async (req, res) => {
     try {
         // We use req.rawBody because stripe.webhooks.constructEvent 
         // REQUIRES the raw buffer, not the parsed JSON object.
-        const payload = req.rawBody || req.body;
+        const payload = req.rawBody;
 
         if (!payload || (Buffer.isBuffer(payload) === false && typeof payload !== 'string')) {
             throw new Error('Raw body not found. Check your middleware configuration in server.js.');
@@ -108,7 +112,7 @@ const purchaseConfirmationPage = async (req, res, next) => {
 
 // Map the functions to the routes
 router.post('/create-checkout-session', requireLogin, express.json(), handleCreateCheckout);
-router.post('/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
+router.post('/webhook', handleStripeWebhook);
 router.get('/purchase-confirmation', requireLogin, purchaseConfirmationPage);
 
 export default router;

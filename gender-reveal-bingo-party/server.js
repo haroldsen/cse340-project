@@ -111,11 +111,6 @@ app.use(express.json({
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
 
-/**
- * Global Middleware
- */
-app.use(addLocalVariables);
-
 // Global middleware (sets res.locals variables)
 app.use(addLocalVariables);
 
