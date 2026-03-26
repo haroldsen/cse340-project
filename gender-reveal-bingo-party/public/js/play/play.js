@@ -6,6 +6,7 @@ const pageViewer = document.getElementById('page-viewer');
 
 const cards = getCards();
 
+let maxSequenceLength = 24;
 let cardsOutOfPlay = cards;
 let cardsInPlay = [];
 let sequence = [];
@@ -281,7 +282,7 @@ function tryIdSubmit() {
 
 function initializeGame() {
     if (hasABoy && hasAGirl) {
-        sequence = getWinningSequence(winningGender, cardsInPlay, 4);
+        sequence = getWinningSequence(winningGender, cardsInPlay, maxSequenceLength);
         sequenceIndex = 0;
         pulled = [];
         switchToPage(newNumberPage);
