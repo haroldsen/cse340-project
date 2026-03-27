@@ -1,12 +1,15 @@
 
 import Stripe from 'stripe';
 
-import { createGameForUserId } from "../../models/games/games";
+import { createGameForUserId } from "../../models/games/games.js";
 
 const stripeKey = process.env.NODE_ENV.includes('dev')
     ? process.env.STRIPE_TEST_SECRET_KEY
     : process.env.STRIPE_SECRET_KEY;
 
+const stripeWebhookSecret = process.env.NODE_ENV.includes('dev')
+    ? process.env.STRIPE_TEST_WEBHOOK_SECRET
+    : process.env.STRIPE_WEBHOOK_SECRET;
 
 const stripe = new Stripe(stripeKey);
 
@@ -17,7 +20,7 @@ export const handleStripeWebhook = async (req, res) => {
 
     console.log("  Headers: ", JSON.stringify(req.headers));
     console.log("  Body Type: ", req.body instanceof Buffer ? "Buffer (Correct body type)" : `${typeof req.body} (WRONG BODY TYPE)`);
-    console.log("  Secret used: ", process.env.STRIPE_WEBHOOK_SECRET?.substring(0, 10));
+    console.log("  Secret used: ", stripeWebhookSecret?.substring(0, 10));
 
     const sig = req.headers['stripe-signature'];
     let event;
