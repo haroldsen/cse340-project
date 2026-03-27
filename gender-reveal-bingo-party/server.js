@@ -17,6 +17,7 @@ import { setupDatabase, testConnection } from './src/models/setup.js';
 // Import MVC components
 import routes from './src/controllers/routes.js';
 import { addLocalVariables } from './src/middleware/global.js';
+import { handleStripeWebhook } from './src/middleware/webhook/stripe.js';
 
 /**
  * Server configuration
@@ -96,17 +97,14 @@ startSessionCleanup();
  */
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Define webhook BEFORE express.json tampers with the request body.
+app.post('/webhook', express.raw({type: 'application/json'}), handleStripeWebhook);
+
 // Allow Express to receive and process POST data
 app.use(express.urlencoded({ extended: true }));
 
-// Use json for all routes but add a rawBody specifically for the stripe webhook
-app.use(express.json({
-    verify: (req, res, buf) => {
-        if (req.originalUrl.includes('/webhook')) {
-            req.rawBody = buf;
-        }
-    }
-}));
+// Use json for all routes
+app.use(express.json());
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
