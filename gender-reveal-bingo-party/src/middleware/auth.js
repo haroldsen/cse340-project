@@ -41,4 +41,33 @@ const requireRole = (roleName) => {
     };
 };
 
+/**
+ * Middleware factory to require specific role for route access
+ * Returns middleware that checks if user has the required role
+ * 
+ * @param {string} roleList - A list of roles that could access the requested page
+ *                            Example: ['admin', 'employee']
+ * @returns {Function} Express middleware function
+ */
+const requireRoleFromList = (roleList) => {
+    return (req, res, next) => {
+
+        // Check if user is logged in first
+        if (!req.session || !req.session.user) {
+            req.flash('error', 'You must be logged in to access this page.');
+            return res.redirect('/login');
+        }
+
+        // Proceed if the user's role is sufficient
+        if (roleList.includes(req.session.user.roleName)) {
+            next();
+        }
+
+        // Redirect with an error if the user's role is not in the list
+        req.flash('error', 'You do not have permission to access this page.');
+        return res.redirect('/');
+        
+    };
+};
+
 export { requireLogin, requireRole };

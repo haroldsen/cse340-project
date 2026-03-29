@@ -7,8 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Read the CA certificate content
-// const caCert = fs.readFileSync(path.join(__dirname, '../../bin', 'byuicse-psql-cert.pem'));
-const caCert = fs.readFileSync(path.join(__dirname, '../../bin', 'prod-ca-2021.crt'));
+const caCert = fs.readFileSync(path.join(__dirname, '../../bin', process.env.CERT));
 
 /**
  * Connection pool for PostgreSQL database.

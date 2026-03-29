@@ -15,7 +15,7 @@ import loginRoutes from './forms/login.js';
 import { processLogout, showDashboard } from './forms/login.js';
 import { requireLogin } from '../middleware/auth.js';
 
-import { myGamesPage, editGameRoutes, playGamePage } from './games/my-games.js';
+import myGamesRoutes from './games/my-games.js';
 import paymentHandlerRoutes from './stripe/stripe.js';
 
 import { Router } from 'express';
@@ -25,35 +25,11 @@ const router = Router();
 
 /* ROUTE SPECIFIC MIDDLEWARE */
 
-// Add catalog-specific styles to all catalog routes
-// router.use('/catalog', (req, res, next) => {
-//     res.addStyle('<link rel="stylesheet" href="/css/catalog.css">');
-//     next();
-// });
-
-// Add faculty-specific styles to all faculty routes
-// router.use('/faculty', (req, res, next) => {
-//     res.addStyle('<link rel="stylesheet" href="/css/faculty.css">');
-//     next();
-// });
-
-// Add contact-specific styles to all contact routes
-// router.use('/contact', (req, res, next) => {
-//     res.addStyle('<link rel="stylesheet" href="/css/contact.css">');
-//     next();
-// });
-
 // Add registration-specific styles to all registration routes
 router.use('/register', (req, res, next) => {
     res.addStyle('<link rel="stylesheet" href="/css/registration.css">');
     next();
 });
-
-// Add login-specific styles to all login routes
-// router.use('/login', (req, res, next) => {
-//     res.addStyle('<link rel="stylesheet" href="/css/login.css">');
-//     next();
-// });
 
 /* DECLARE ROUTES */
 
@@ -64,16 +40,8 @@ router.get('/contact-us', contactUsPage);
 router.get('/get-cards', requireLogin, getCardsPage);
 router.get('/intro-video', introVideoPage);
 
-// Game management pages
-router.get('/my-games', requireLogin, myGamesPage);
-// router.get('/my-games/edit-game/:gameId', requireLogin, editGamePage);
-router.get('/my-games/play-game/:gameId', requireLogin, playGamePage);
-
-// Edit game form routes
-router.use('/my-games/edit-game', editGameRoutes);
-
-// Contact form routes
-// router.use('/contact', contactRoutes);
+// Game management routes
+router.use('/my-games', requireLogin, myGamesRoutes);
 
 // Registration routes
 router.use('/register', registrationRoutes);
@@ -86,12 +54,5 @@ router.use('/purchase-game', paymentHandlerRoutes);
 
 // Authentication-related routes at root level
 router.get('/logout', processLogout);
-// router.get('/dashboard', requireLogin, showDashboard);
-
-// Demo page with special middleware
-// router.get('/demo', addDemoHeaders, demoPage);
-
-// Route to trigger a test error
-// router.get('/test-error', testErrorPage);
 
 export default router;
