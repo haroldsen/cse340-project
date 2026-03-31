@@ -10,15 +10,19 @@ const aboutPage = (req, res) => {
 };
 
 const getCardsPage = (req, res) => {
-    res.render('get-cards', { title: 'Get Cards | Gender Reveal Bingo Party' })
+    res.render('get-cards', { title: 'Get Cards | Gender Reveal Bingo Party' });
 };
 
 const contactUsPage = (req, res) => {
-    res.render('contact-us', { title: 'Contact Us | Gender Reveal Bingo Party' })
+    res.render('contact-us', { title: 'Contact Us | Gender Reveal Bingo Party' });
 };
 
 const introVideoPage = (req, res) => {
-    res.render('intro-video', { title: 'Intro Video | Gender Reveal Bingo Party' })
+    res.render('intro-video', { title: 'Intro Video | Gender Reveal Bingo Party' });
+};
+
+const playableBingoCardPage = (req, res) => {
+    res.render('bingo-card', { title: 'Playable Card | Gender Reveal Bingo Party' });
 };
 
 const testErrorPage = (req, res, next) => {
@@ -27,4 +31,4 @@ const testErrorPage = (req, res, next) => {
     next(err);
 };
 
-export { homePage, aboutPage, getCardsPage, contactUsPage, testErrorPage, introVideoPage };
+export { homePage, aboutPage, getCardsPage, contactUsPage, testErrorPage, introVideoPage, playableBingoCardPage };

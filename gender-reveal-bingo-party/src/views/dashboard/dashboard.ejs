@@ -1,0 +1,61 @@
+<%- include('../partials/header') %>
+<main>
+    <div class="page">
+        <h1>Account Manager</h1>
+
+        <p>Search for a user by their name or email</p>
+        <input id="account-search" type="text">
+        
+        <ul id="search-results">
+
+        </ul>
+
+        <script>
+            const accountSearch = document.getElementById('account-search');
+            const resultsContainer = document.getElementById('search-results');
+
+            async function updateSearchResults() {
+
+                // Get the query parameter from the request
+                const query = accountSearch.value;
+
+                // 1. Fetch data from our new API route
+                const response = await fetch(`/api/search-users?q=${encodeURIComponent(query)}`);
+                const users = await response.json();
+
+                // 2. Clear current results
+                resultsContainer.innerHTML = '';
+
+                // 3. Insert the search results
+                for (let i = 0; i < users.length; i ++) {
+                    resultsContainer.insertAdjacentHTML(
+                        'beforeend',
+                        `<li>
+                            <p>${users[i].name}</p>
+                            <p>${users[i].email}</p>
+                            <p>${users[i].createdAt}</p>
+                            <a href="/dashboard/view-account/${users[i].id}" class="button">View Account</a>
+                        </li>`
+                    );
+                }
+
+            }
+
+            // Executes the function after the timeout has been met.
+            // Prevents querying the database at every keystroke.
+            function debounce(func, timeout) {
+                let timer;
+                return (...args) => {
+                    clearTimeout(timer);
+                    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+                };
+            }
+
+            const debouncedSearch = debounce(updateSearchResults, 300);
+
+            accountSearch.addEventListener('input', debouncedSearch);
+        </script>
+
+    </div>
+</main>
+<%- include('../partials/footer') %>

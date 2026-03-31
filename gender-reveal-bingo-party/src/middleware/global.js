@@ -55,20 +55,17 @@ const addLocalVariables = (req, res, next) => {
     // Make req.query available to all templates
     res.locals.queryParams = { ...req.query };
 
-    // Randomly assign a theme class to the body
-    const themes = ['blue-theme', 'green-theme', 'red-theme'];
-    const randomTheme = themes[Math.floor(Math.random() * themes.length)];
-    res.locals.bodyClass = randomTheme;
-
     // Add methods to the res object and to locals for ejs use
     setHeadAssetsFunctionality(res);
 
     // Convenience variable for UI state based on session state
     res.locals.isLoggedIn = false;
     res.locals.userName = 'Guest';
+    res.locals.userRole = 'user';
     if (req.session && req.session.user) {
         res.locals.isLoggedIn = true;
         res.locals.userName = req.session.user.name;
+        res.locals.userRole = req.session.user.roleName;
     }
 
     // Continue to the next middleware or route handler

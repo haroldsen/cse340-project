@@ -36,7 +36,7 @@
     <!-- End Google Tag Manager -->
 
 </head>
-<body class="<%= bodyClass %>">
+<body>
 
     <!-- For Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W686TSMP"
@@ -53,18 +53,24 @@
             <a href="/contact-us">Contact Us</a>
 
             <!-- Only visible when logged in -->
-                <% if (isLoggedIn) { %>
-                    <a href="/my-games">My Games</a>
-                    <a href="/get-cards">Get Cards</a>
-                    <!-- <a href="/my-account">My Account</a> -->
-                    <a href="/logout">Log Out</a>
-                <% } %>
+            <% if (isLoggedIn) { %>
+                <a href="/my-games">My Games</a>
+                <a href="/get-cards">Get Cards</a>
+                <!-- <a href="/my-account">My Account</a> -->
+                <a href="/logout">Log Out</a>
+            <% } %>
 
-                <!-- Only visible when NOT logged in -->
-                <% if (!isLoggedIn) { %>
-                    <a href="/register">Create Account</a>
-                    <a href="/login">Log In</a>
-                <% } %>
+            <!-- Only visible when NOT logged in -->
+            <% if (!isLoggedIn) { %>
+                <a href="/register">Create Account</a>
+                <a href="/login">Log In</a>
+            <% } %>
+
+            <!-- Add links for admins -->
+            <% if (userRole == 'admin' || userRole == 'employee') { %>
+                <a href="/dashboard">Dashboard</a>
+            <% } %>
+
         </nav>
     </header>
 

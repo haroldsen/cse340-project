@@ -60,7 +60,7 @@ const requireRoleFromList = (roleList) => {
 
         // Proceed if the user's role is sufficient
         if (roleList.includes(req.session.user.roleName)) {
-            next();
+            return next();
         }
 
         // Redirect with an error if the user's role is not in the list
@@ -70,4 +70,4 @@ const requireRoleFromList = (roleList) => {
     };
 };
 
-export { requireLogin, requireRole };
+export { requireLogin, requireRole, requireRoleFromList };

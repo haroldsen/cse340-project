@@ -6,19 +6,23 @@ import {
     aboutPage,
     getCardsPage,
     contactUsPage,
-    introVideoPage
+    introVideoPage,
+    playableBingoCardPage
 } from './index.js';
 
 import contactRoutes from './forms/contact.js';
+
+import { processLogout } from './forms/login.js';
+import { requireLogin, requireRoleFromList } from '../middleware/auth.js';
+
 import registrationRoutes from './forms/registration.js';
 import loginRoutes from './forms/login.js';
-import { processLogout, showDashboard } from './forms/login.js';
-import { requireLogin } from '../middleware/auth.js';
-
 import myGamesRoutes from './games/my-games.js';
 import paymentHandlerRoutes from './stripe/stripe.js';
+import dashboardRoutes from './dashboard/dashboard.js';
 
 import { Router } from 'express';
+import apiRoutes from './api/api.js';
 
 // Create a new router instance
 const router = Router();
@@ -39,9 +43,16 @@ router.get('/about', aboutPage);
 router.get('/contact-us', contactUsPage);
 router.get('/get-cards', requireLogin, getCardsPage);
 router.get('/intro-video', introVideoPage);
+router.get('/bingo-card', playableBingoCardPage);
+
+// API routes
+router.use('/api', apiRoutes);
 
 // Game management routes
 router.use('/my-games', requireLogin, myGamesRoutes);
+
+// Stripe purchase routes
+router.use('/purchase-game', paymentHandlerRoutes);
 
 // Registration routes
 router.use('/register', registrationRoutes);
@@ -49,10 +60,10 @@ router.use('/register', registrationRoutes);
 // Login routes (form and submission)
 router.use('/login', loginRoutes);
 
-// Stripe purchase routes
-router.use('/purchase-game', paymentHandlerRoutes);
-
 // Authentication-related routes at root level
 router.get('/logout', processLogout);
+
+// Dashboard routes for admins and friends
+router.use('/dashboard', requireRoleFromList(['admin', 'employee']), dashboardRoutes);
 
 export default router;
