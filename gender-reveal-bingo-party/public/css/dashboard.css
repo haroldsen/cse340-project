@@ -1,0 +1,17 @@
+
+#search-results {
+    li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        border: solid var(--purple) 4px;
+        border-radius: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        strong {
+            text-decoration: none;
+        }
+    }
+}

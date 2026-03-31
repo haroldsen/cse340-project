@@ -56,7 +56,14 @@
             <% if (isLoggedIn) { %>
                 <a href="/my-games">My Games</a>
                 <a href="/get-cards">Get Cards</a>
-                <!-- <a href="/my-account">My Account</a> -->
+            <% } %>
+
+            <!-- Add links for admins -->
+            <% if (userRole == 'admin' || userRole == 'employee') { %>
+                <a href="/dashboard">Dashboard</a>
+            <% } %>
+
+            <% if (isLoggedIn) { %>
                 <a href="/logout">Log Out</a>
             <% } %>
 
@@ -64,11 +71,6 @@
             <% if (!isLoggedIn) { %>
                 <a href="/register">Create Account</a>
                 <a href="/login">Log In</a>
-            <% } %>
-
-            <!-- Add links for admins -->
-            <% if (userRole == 'admin' || userRole == 'employee') { %>
-                <a href="/dashboard">Dashboard</a>
             <% } %>
 
         </nav>
