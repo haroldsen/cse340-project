@@ -1,4 +1,6 @@
 
+@import './partials/chevron-background.css';
+
 :root {
     --lightest-purple: #e9cbff;
     --light-purple: #d8a3ff;

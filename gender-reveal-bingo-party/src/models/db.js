@@ -22,6 +22,7 @@ const caCert = fs.readFileSync(path.join(__dirname, '../../bin', process.env.CER
  */
 const pool = new Pool({
     connectionString: process.env.DB_URL,
+    // max: 2,
     ssl: {
         ca: caCert,  // Use the certificate content, not the file path
         rejectUnauthorized: true,  // Keep this true for proper security

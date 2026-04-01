@@ -44,41 +44,83 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <header>
-        <a class="logo-link" href="/">
-            <%- include('../svgs/logo') %>
-        </a>
-        <nav>
-            <!-- Always visible links -->
-            <a href="/">About Us</a>
-            <a href="/contact-us">Contact Us</a>
 
-            <!-- Only visible when logged in -->
-            <% if (isLoggedIn) { %>
-                <a href="/my-games">My Games</a>
-                <a href="/get-cards">Get Cards</a>
-            <% } %>
+        <div class="header-background">
+            <a class="logo-link" href="/">
+                <%- include('../svgs/logo') %>
+            </a>
 
-            <!-- Add links for admins -->
-            <% if (userRole == 'admin' || userRole == 'employee') { %>
-                <a href="/dashboard">Dashboard</a>
-            <% } %>
+            <nav class="desktop-nav">
+                <!-- Always visible links -->
+                <a href="/">About Us</a>
+                <a href="/contact-us">Contact Us</a>
 
-            <% if (isLoggedIn) { %>
-                <a href="/logout">Log Out</a>
-            <% } %>
+                <!-- Only visible when logged in -->
+                <% if (isLoggedIn) { %>
+                    <a href="/my-games">My Games</a>
+                    <a href="/get-cards">Get Cards</a>
+                <% } %>
 
-            <!-- Only visible when NOT logged in -->
-            <% if (!isLoggedIn) { %>
-                <a href="/register">Create Account</a>
-                <a href="/login">Log In</a>
-            <% } %>
+                <!-- Add links for admins -->
+                <% if (userRole == 'admin' || userRole == 'employee') { %>
+                    <a href="/dashboard">Dashboard</a>
+                <% } %>
 
-        </nav>
+                <% if (isLoggedIn) { %>
+                    <a href="/logout">Log Out</a>
+                <% } %>
+
+                <!-- Only visible when NOT logged in -->
+                <% if (!isLoggedIn) { %>
+                    <a href="/register">Create Account</a>
+                    <a href="/login">Log In</a>
+                <% } %>
+            </nav>
+
+            <details class="mobile-nav">
+                <summary>Menu</summary>
+
+                <div class="link-stack">
+                    <!-- Always visible links -->
+                    <a href="/">About Us</a>
+                    <a href="/contact-us">Contact Us</a>
+
+                    <!-- Only visible when logged in -->
+                    <% if (isLoggedIn) { %>
+                        <a href="/my-games">My Games</a>
+                        <a href="/get-cards">Get Cards</a>
+                    <% } %>
+
+                    <!-- Add links for admins -->
+                    <% if (userRole == 'admin' || userRole == 'employee') { %>
+                        <a href="/dashboard">Dashboard</a>
+                    <% } %>
+
+                    <% if (isLoggedIn) { %>
+                        <a href="/logout">Log Out</a>
+                    <% } %>
+
+                    <!-- Only visible when NOT logged in -->
+                    <% if (!isLoggedIn) { %>
+                        <a href="/register">Create Account</a>
+                        <a href="/login">Log In</a>
+                    <% } %>
+                </div>
+
+            </details>
+        </div>
+
+        <% if (isLoggedIn) { %>
+            <div class="login-name">
+                <p><%= userName %></p>
+            </div>
+        <% } %>
+
     </header>
 
 <% if (isLoggedIn) { %>
     <div class="login-name">
-        <p><%= userName %></p>
+        <p>Spacer</p>
     </div>
 <% } %>
 

@@ -6,9 +6,9 @@ import { editGameValidation } from '../../middleware/validation/forms.js';
 
 import { createGameForUserId } from "../../models/games/games.js";
 
-const dashboardPage = (req, res, next) => {
+const dashboardPage = (req, res) => {
 
-    res.addScript('<script src="/js/dashboard.js" defer></script>')
+    res.addScript('<script src="/js/dashboard.js" defer></script>');
     
     res.render('dashboard/dashboard', { title: 'Dashboard | Gender Reveal Bingo Party' });
 }

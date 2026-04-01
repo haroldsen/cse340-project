@@ -92,6 +92,12 @@ app.use(session({
 // Start automatic session cleanup
 startSessionCleanup();
 
+// Global middleware (sets res.locals variables)
+app.use(addLocalVariables);
+
+// Flash message middleware (must come after session and global middleware)
+app.use(flash);
+
 /**
  * Configure Express
  */
@@ -108,12 +114,6 @@ app.use(express.json());
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
-
-// Global middleware (sets res.locals variables)
-app.use(addLocalVariables);
-
-// Flash message middleware (must come after session and global middleware)
-app.use(flash);
 
 /**
  * Routes
