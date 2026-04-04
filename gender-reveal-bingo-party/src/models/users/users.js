@@ -55,6 +55,29 @@ const findUserByEmail = async (email) => {
 };
 
 /**
+ * Find a user by their user id.
+ * 
+ * @param {string} id - Id to search for
+ * @returns {Promise<Object|null>} User object with password hash or null if not found
+ */
+const getUserById = async (id) => {
+    const query = `
+        SELECT
+            users.id,
+            users.name,
+            users.email,
+            users.created_at,
+            roles.role_name AS "roleName"
+        FROM users
+        INNER JOIN roles ON users.role_id = roles.id
+        WHERE users.id = $1
+        LIMIT 1
+    ;`;
+    const result = await db.query(query, [id]);
+    return result.rows[0] || null;
+};
+
+/**
  * Verify a plain text password against a stored bcrypt hash.
  * 
  * @param {string} plainPassword - The password to verify
@@ -66,4 +89,4 @@ const verifyPassword = async (plainPassword, hashedPassword) => {
     return isVerified;
 };
 
-export { findUserByEmail, verifyPassword, searchUsersByNameAndEmail };
+export { findUserByEmail, verifyPassword, searchUsersByNameAndEmail, getUserById };

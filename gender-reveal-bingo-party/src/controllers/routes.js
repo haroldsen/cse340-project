@@ -64,6 +64,6 @@ router.use('/login', loginRoutes);
 router.get('/logout', processLogout);
 
 // Dashboard routes for admins and friends
-router.use('/dashboard', requireRoleFromList(['admin', 'employee']), dashboardRoutes);
+router.use('/dashboard', requireLogin, requireRoleFromList(['admin', 'employee']), dashboardRoutes);
 
 export default router;
