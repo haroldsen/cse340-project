@@ -63,7 +63,7 @@ router.use('/login', loginRoutes);
 // Authentication-related routes at root level
 router.get('/logout', processLogout);
 
-// Dashboard routes for admins and friends
-router.use('/dashboard', requireLogin, requireRoleFromList(['admin', 'employee']), dashboardRoutes);
+// Dashboard routes for admins and managers
+router.use('/dashboard', requireLogin, requireRoleFromList(['admin', 'manager']), dashboardRoutes);
 
 export default router;

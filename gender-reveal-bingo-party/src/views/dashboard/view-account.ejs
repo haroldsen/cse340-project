@@ -1,7 +1,31 @@
 <%- include('../partials/header') %>
 <main class="dashboard">
     <div class="page">
-        <h1>View Account</h1>
+        <h1>Viewing Account</h1>
+
+        <h2><%= selectedUser.name %></h2>
+
+        <form class="unstyled-form" action="/dashboard/view-account/<%= selectedUser.id %>/gift-session" method="POST">
+            <button type="submit">Gift a Session</button>
+        </form>
+
+        <% if (games.length > 0) { %>
+            
+            <p>User's Games:</p>
+            
+            <ul id="my-games-list">
+                <% for( let index = 0; index < games.length; index ++ ) { %>
+                    <li>
+                        <div class="game-details">
+                            <p><%= games[index].title %></p>
+                        </div>
+                    </li>
+                <% } %>
+            </ul>
+
+        <% } else { %>
+            <p>This user has no games.</p>
+        <% } %>
 
     </div>
 </main>

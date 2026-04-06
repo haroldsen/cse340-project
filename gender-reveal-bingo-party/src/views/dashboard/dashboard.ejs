@@ -40,13 +40,14 @@
                     }
 
                     // Insert the search results
-                    for (let i = 0; i < users.length; i++) {
+                    for (let i = 0; i < users.length; i ++) {
                         resultsContainer.insertAdjacentHTML(
                             'beforeend',
                             `<li>
                                 <p><strong>${users[i].name}</strong></p>
                                 <p>Email: ${users[i].email}</p>
                                 <p><small>Created At: ${users[i].createdAt}</small></p>
+                                <p><small>Role: ${users[i].roleName}</small></p>
                                 <a href="/dashboard/view-account/${users[i].id}" class="button">View Account</a>
                             </li>`
                         );

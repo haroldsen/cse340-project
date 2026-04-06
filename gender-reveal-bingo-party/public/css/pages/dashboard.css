@@ -1,4 +1,8 @@
 
+.dashboard {
+    justify-content: flex-start;
+}
+
 #search-results {
     li {
         display: flex;

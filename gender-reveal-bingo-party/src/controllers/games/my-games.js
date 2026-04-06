@@ -6,7 +6,7 @@ import { editGameValidation } from '../../middleware/validation/forms.js';
 
 import { getGamesForUserId, getGameById, updateGameByGameId } from "../../models/games/games.js";
 
-const myGamesPage = async (req, res, next) => {
+const myGamesPage = async (req, res) => {
 
     const userGames = await getGamesForUserId(req.session.user.id);
 
@@ -18,78 +18,109 @@ const myGamesPage = async (req, res, next) => {
     });
 }
 
-const playGamePage = async (req, res, next) => {
+const playGamePage = async (req, res) => {
 
     res.addScript('<script type="module" src="/js/play/play.js" defer></script>');
 
+    // DOES THE GAME EXIST?
+
     const gameToPlay = await getGameById(req.params.gameId);
 
-    const sessionUserId = req.session.user.id;
+    if (!gameToPlay) {
+        req.flash('error', 'Game not found.');
+        return res.redirect('/my-games');
+    }
+
+    // DOES THE USER OWN THE GAME?
+
     const gameUserId = gameToPlay.userId;
 
-    if (sessionUserId === gameUserId) {
+    const isOwnerOfGame = req.session.user.id === gameUserId;
+
+    if (isOwnerOfGame) {
         res.render('games/play-game', {
             title: 'Play | Gender Reveal Bingo Party',
             winningGender: gameToPlay.gender
         });
     } else {
-        res.render('games/access-issue', {
-            title: 'Access Denied | Gender Reveal Bingo Party',
-        });
+        req.flash('error', 'You do not have permission to play this game.');
+        return res.redirect('/my-games');
     }
 }
 
-const editGamePage = async (req, res, next) => {
+const editGamePage = async (req, res) => {
 
     const gameToEdit = await getGameById(req.params.gameId);
 
-    const sessionUserId = req.session.user.id;
+    if (!gameToEdit) {
+        req.flash('error', 'Game not found.');
+        return res.redirect('/my-games');
+    }
+
     const gameUserId = gameToEdit.userId;
     const previousTitle = gameToEdit.title;
 
-    if (sessionUserId === gameUserId) {
+    const isOwnerOfGame = req.session.user.id === gameUserId;
+
+    if (isOwnerOfGame) {
         res.render('games/edit-game', {
             title: 'Edit Game | Gender Reveal Bingo Party',
             previousTitle: previousTitle,
             gameId: req.params.gameId
         });
     } else {
-        res.render('games/access-issue', {
-            title: 'Edit Game | Gender Reveal Bingo Party',
-            gameId: req.params.gameId
-        });
+        req.flash('error', 'You do not have permission to edit this game.');
+        return res.redirect('/my-games');
     }
 }
 
 const handleEditGameSubmission = async (req, res) => {
 
     const gameId = req.params.gameId;
+    const gameToEdit = await getGameById(gameId);
 
-    // Check for validation errors
+    // DOES THE GAME EXIST?
+
+    if (!gameToEdit) {
+        req.flash('error', 'Game not found.');
+        return res.redirect('/my-games');
+    }
+
+    // DOES THE USER OWN THE GAME?
+
+    const isOwnerOfGame = gameToEdit.userId === req.session.user.id;
+
+    if (!isOwnerOfGame) {
+        req.flash('error', 'You do not have permission to edit this game.');
+        return res.redirect('/my-games');
+    }
+
+    // WERE THE EDITS VALID?
+
     const errors = validationResult(req);
-
-    // If one or more errors exist
     if (!errors.isEmpty()) {
-        // Store each validation error as a separate flash message
         errors.array().forEach(error => {
             req.flash('error', error.msg);
         });
         return res.redirect(`/my-games/edit-game/${gameId}`);
     }
 
-    try {
-        // Extract validated data
-        const { title, gender } = req.body;
+    // UPDATE THE DATABASE
 
-        // Update database object
+    try {
+        const { title, gender } = req.body;
         await updateGameByGameId(gameId, title, gender);
         
         req.flash('success', 'Game edited successfully!');
-        res.redirect('/my-games');
-    } catch (error) {
+        return res.redirect('/my-games');
+    }
+    
+    // CATCH DATABASE ERRORS
+
+    catch (error) {
         console.error('Error editing game:', error);
         req.flash('error', 'Unable to edit game. Please try again later.');
-        res.redirect(`/my-games/edit-game/${gameId}`);
+        return res.redirect(`/my-games/edit-game/${gameId}`);
     }
 }
 

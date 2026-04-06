@@ -110,17 +110,11 @@
             </details>
         </div>
 
-        <% if (isLoggedIn) { %>
-            <div class="login-name">
-                <p><%= userName %></p>
-            </div>
-        <% } %>
-
     </header>
 
 <% if (isLoggedIn) { %>
     <div class="login-name">
-        <p>Spacer</p>
+        <p><%= userName %></p>
     </div>
 <% } %>
 
