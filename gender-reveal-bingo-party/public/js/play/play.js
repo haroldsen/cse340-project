@@ -15,6 +15,12 @@ let pulled = [];
 let doneAnimating = true;
 let hasABoy = false;
 let hasAGirl = false;
+let boyIds = cards
+    .filter(item => item.gender === 'BOY')
+    .map(item => item.id);
+let girlIds = cards
+    .filter(item => item.gender === 'GIRL')
+    .map(item => item.id);
 
 
 
@@ -63,16 +69,39 @@ introVideoPage.addEventListener('click', (e) => {
 // Create get ids page
 const getIdsPage = document.createElement('div');
 getIdsPage.className = 'page';
+getIdsPage.id = 'get-ids-page';
 getIdsPage.innerHTML = `
-    <form id="get-ids">
-        <p id="submit-message"></p>
-        <label for="id-input">Type your ID here</label>
-        <input type="text" autocomplete="off" maxlength="4" class="id-input" id="id-input">
-        <div id="get-ids-button-row" class="button-row">
-            <button class="submit-id-button">SUBMIT</button>
+    <div class="qr-code-div">
+        <p>Scan for a bingo card!</p>
+        <img
+            src="../../images/qr-bingo-card.svg"
+            draggable="false"
+        >
+        <p class="small-url">genderrevealbingo.party/bingo-card</p>
+    </div>
+    <div class="id-input-section">
+        <form id="get-ids">
+            <p id="submit-message"></p>
+            <label for="id-input">Type your ID here</label>
+            <input type="text" autocomplete="off" maxlength="4" class="id-input" id="id-input">
+            <div id="get-ids-button-row" class="button-row">
+                <button class="submit-id-button">SUBMIT</button>
+            </div>
+        </form>
+        <div class="id-suggestions">
+            <p id="girl-suggestion">GIRL: ${girlIds[0]}</p>
+            <p id="boy-suggestion">BOY: ${boyIds[0]}</p>
         </div>
-    </form>
+    </div>
 `;
+const showQRCodeButton = document.createElement('button');
+showQRCodeButton.id = 'show-qr-button';
+showQRCodeButton.innerHTML = 'SHOW QR CODE';
+showQRCodeButton.addEventListener('click', () => {
+    getIdsPage.classList.toggle('show-qr-code');
+});
+getIdsPage.insertAdjacentElement('afterbegin', showQRCodeButton);
+
 const playButton = document.createElement('button');
 playButton.innerHTML = 'PLAY';
 playButton.addEventListener('click', initializeGame);
@@ -245,7 +274,7 @@ function tryIdSubmit() {
     // Test if the user id can be added.
     for (let i = 0; i < cardsOutOfPlay.length; i ++) {
         if (searchId === cardsOutOfPlay[i].id) {
-            // Notice of a girl or a boy is being added to the cardsInPlay.
+            // Notice if a girl or a boy is being added to the cardsInPlay.
             if (cardsOutOfPlay[i].gender === 'BOY') {
                 hasABoy = true;
             } else if (cardsOutOfPlay[i].gender === 'GIRL') {
@@ -257,6 +286,13 @@ function tryIdSubmit() {
             submitMessage.style.color = 'var(--green)';
             submitMessage.innerHTML = `Card "${searchId}" added!`;
             notFound = false;
+
+            // Update the ID suggestions
+            boyIds = boyIds.filter(id => id != searchId);
+            girlIds = girlIds.filter(id => id != searchId);
+            document.getElementById('boy-suggestion').innerHTML = `BOY: ${boyIds[0]}`;
+            document.getElementById('girl-suggestion').innerHTML = `GIRL: ${girlIds[0]}`;
+
             break;
         }
     }
