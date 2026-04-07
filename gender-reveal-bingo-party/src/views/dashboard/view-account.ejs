@@ -5,6 +5,8 @@
 
         <h2><%= selectedUser.name %></h2>
 
+        <a href="/dashboard" class="button">Back to Account Search</a>
+
         <form class="unstyled-form" action="/dashboard/view-account/<%= selectedUser.id %>/gift-session" method="POST">
             <button type="submit">Gift a Session</button>
         </form>

@@ -3,6 +3,7 @@
 @import './pages/index.css';
 @import './pages/dashboard.css';
 @import './pages/my-games.css';
+@import './pages/bingo-card.css';
 
 :root {
     --purple-light: #e0abff;
@@ -22,6 +23,15 @@
     --red-2: #ff6966;
     --red-3: #e25451;
     --red-4: #631110;
+
+    --boy-light: #cce7ff;
+    --boy-medium: #b8deff;
+    --boy-dark: #00294d;
+
+    --girl-light: #ffe0ef;
+    --girl-medium: #ffcce4;
+    --girl-dark: #4d0024;
+
 }
 
 @media screen 
@@ -80,7 +90,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding-top: var(--default-spacing);
     padding-bottom: var(--default-spacing);
 }
@@ -106,7 +116,7 @@ button, .button {
     transition: ease 300ms;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.15);
 
-    :hover {
+    &:hover {
         top: 1px;
         cursor: pointer;
         background-color: var(--purple-hover);
@@ -223,7 +233,7 @@ form a {
 }
 
 .get-cards {
-    img {
+    svg {
         max-width: 400px;
     }
 }

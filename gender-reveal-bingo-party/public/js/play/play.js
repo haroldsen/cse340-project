@@ -1,5 +1,5 @@
 
-import { getCards } from "./card-data.mjs";
+import { getCards } from "../card-data.mjs";
 import { getWinningSequence } from "./sequence.mjs";
 
 const pageViewer = document.getElementById('page-viewer');

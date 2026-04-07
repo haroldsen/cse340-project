@@ -1,0 +1,15 @@
+
+.bingo-card-main {
+    input {
+        text-align: center;
+    }
+}
+
+.playable-card {
+    width: 100vw;
+    max-width: 500px;
+}
+
+#id-warning {
+    color: var(--red-3);
+}
